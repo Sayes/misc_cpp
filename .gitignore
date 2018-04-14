@@ -1,0 +1,9 @@
+release/base64
+release/crypto-op
+release/fastdfs_op
+release/json_parse
+release/libpython_wrap.so
+release/mysql_conn
+release/opencv_op
+release/redis_rw
+release/xml_parse
