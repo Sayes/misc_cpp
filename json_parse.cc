@@ -30,9 +30,12 @@ int main(int argc, char* argv[]) {
     Json::Value v;
     JSONCPP_STRING errs;
 
-    if (!pcr->parse(buf.get(), buf.get() + flen, &v, &errs)) break;
-
-    std::cout << v["key1"].asString() << std::endl;
+    try {
+      if (!pcr->parse(buf.get(), buf.get() + flen, &v, &errs)) break;
+      std::cout << v["key1"].asString() << std::endl;
+    } catch (const std::exception& e) {
+      std::cout << "Json::CharReader::parse(" << buf << ") error" << std::endl;
+    }
 
     result = 0;
   } while (0);
