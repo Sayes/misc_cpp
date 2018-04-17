@@ -2,7 +2,7 @@
  * https://github.com/mysql/mysql-connector-cpp.git
  *
  * g++ mysql_conn.cc -std=c++11 -I$MYSQLCPPCONN_HOME/include
- * -L$MYSQLCPPCONN_HOME/lib -lmysqlcppconn -o mysql_conn
+ * -L$MYSQLCPPCONN_HOME/lib -lmysqlcppconn -o release/mysql_conn
  */
 
 #include <cppconn/connection.h>

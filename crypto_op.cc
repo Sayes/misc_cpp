@@ -1,5 +1,5 @@
 /*
- * g++ crypto.cc -std=c++11 -lcrypto -o release/crypto_op
+ * g++ crypto_op.cc -std=c++11 -lcrypto -o release/crypto_op
  */
 
 #include <openssl/des.h>

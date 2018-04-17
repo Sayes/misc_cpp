@@ -1,6 +1,9 @@
 /*
+ * https://github.com/leethomason/tinyxml2.git
+ * v6.0.0
  *
- *
+ * g++ xml_parse.cc -std=c++11 -I$TINYXML2_HOME/include -L$TINYXML2_HOME/lib
+ * -ltinyxml2 -o release/xml_parse
  */
 
 #include <tinyxml2.h>

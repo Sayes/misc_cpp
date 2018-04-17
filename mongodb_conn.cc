@@ -1,5 +1,9 @@
 /*
+ * https://github.com/mongodb/mongo-cxx-driver
  *
+ * g++ mongodb_conn.cc -std=c++11 -I/usr/local/include/libmongoc-1.0
+ * -I/usr/local/include/mongocxx/v_noabi -I/usr/local/include/bsoncxx/v_noabi
+ * -I/usr/local/include/libbson-1.0 -lbsoncxx -lmongocxx -o release/mongodb_conn
  */
 
 #include <stdio.h>

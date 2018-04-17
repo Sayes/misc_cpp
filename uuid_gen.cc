@@ -49,6 +49,8 @@ intmain(intargc,char*argv[])
 
 */
 
+// g++ uuid_gen.cc -std=c++11 -luuid -o release/uuid_gen
+//
 // Linux£ºuuid_generate(UUID)
 // cmd£ºgccatemp.c-oatemp-luuid
 #include <stdio.h>

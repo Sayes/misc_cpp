@@ -1,10 +1,12 @@
 release/base64
-release/crypto-op
+release/crypto_op
 release/fastdfs_op
 release/json_parse
 release/libpython_wrap.so
+release/mongodb_conn
 release/mysql_conn
 release/opencv_op
 release/redis_rw
+release/uuid_gen
 release/websocket_svr
 release/xml_parse
