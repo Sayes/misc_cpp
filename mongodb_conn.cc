@@ -10,7 +10,6 @@
 #include <bsoncxx/builder/basic/array.hpp>
 #include <bsoncxx/builder/basic/document.hpp>
 #include <bsoncxx/builder/basic/kvp.hpp>
-#include <iostream>
 #include <mongocxx/client.hpp>
 #include <mongocxx/cursor.hpp>
 #include <mongocxx/exception/query_exception.hpp>
@@ -36,15 +35,18 @@ int main(int argc, char* argv[]) {
       order_builder << "id_" << -1;
       opts.sort(order_builder.view());
       bsoncxx::builder::stream::document filter;
+      filter << "pid" << bsoncxx::builder::stream::open_document << "$gt"
+             << 10000 << bsoncxx::builder::stream::close_document;
+      filter << "pid" << bsoncxx::builder::stream::open_document << "$lt"
+             << 20000 << bsoncxx::builder::stream::close_document;
 
       mongocxx::cursor cursor_ = db_["startup_log"].find(filter.view(), opts);
-      mongocxx::cursor::iterator it = cursor_.begin();
 
-      int i = 0;
+      mongocxx::cursor::iterator it = cursor_.begin();
       for (; it != cursor_.end(); ++it) {
         bsoncxx::document::view view = *it;
         bsoncxx::document::element element{view["pid"]};
-        printf("%d\n", i++);
+        printf("%lu\n", element.get_int64().value);
       }
 
       result = 0;
