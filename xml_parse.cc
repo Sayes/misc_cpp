@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2017-2018 S.Y.Z
+ *
  * https://github.com/leethomason/tinyxml2.git
  * v6.0.0
  *
@@ -117,7 +119,6 @@ int main(int argc, char* argv[]) {
     }
 
     result = 0;
-
   } while (0);
 
   return result;

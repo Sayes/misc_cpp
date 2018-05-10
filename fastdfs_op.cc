@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2017-2018 S.Y.Z
+ *
  * https://github.com/happyfish100/libfastcommon.git
  * https://github.com/happyfish100/fastdfs.git
  *

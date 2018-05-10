@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2017-2018 S.Y.Z
+ *
  * https://github.com/mysql/mysql-connector-cpp.git
  *
  * g++ mysql_conn.cc -std=c++11 -I$MYSQLCPPCONN_HOME/include
@@ -44,7 +46,6 @@ int main(int argc, char* argv[]) {
     } catch (sql::SQLException& e) {
       std::cout << e.what() << std::endl;
     }
-
   } while (0);
   if (pconnection_) {
     delete pconnection_;

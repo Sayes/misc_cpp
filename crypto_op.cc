@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2017-2018 S.Y.Z
  * g++ crypto_op.cc -std=c++11 -lcrypto -o release/crypto_op
  */
 
@@ -28,9 +29,9 @@ typedef enum {
 std::string des_encrypt(const std::string &cleartext, const std::string &key);
 std::string des_decrypt(const std::string &ciphertext, const std::string &key);
 char *rsa_encrypt(const unsigned char *str, const char *public_key_filename,
-                  int &len);
+                  int *len);
 char *rsa_decrypt(const unsigned char *str, const char *private_key_filename,
-                  int &len);
+                  int *len);
 
 std::string des_encrypt(const std::string &cleartext, const std::string &key) {
   std::string strCipherText;
@@ -135,7 +136,7 @@ std::string des_decrypt(const std::string &ciphertext, const std::string &key) {
 }
 
 char *rsa_encrypt(const unsigned char *str, const char *public_key_filename,
-                  int &len) {
+                  int *len) {
   char *p_en = NULL;
   RSA *p_rsa = NULL;
   FILE *pf = NULL;
@@ -149,10 +150,9 @@ char *rsa_encrypt(const unsigned char *str, const char *public_key_filename,
     rsa_len = RSA_size(p_rsa);
     p_en = static_cast<char *>(malloc(rsa_len + 1));
     memset(p_en, 0, rsa_len + 1);
-    if ((len = RSA_public_encrypt(rsa_len, str, (unsigned char *)p_en, p_rsa,
-                                  RSA_NO_PADDING)) < 0)
+    if ((*len = RSA_public_encrypt(rsa_len, str, (unsigned char *)p_en, p_rsa,
+                                   RSA_NO_PADDING)) < 0)
       break;
-
   } while (0);
 
   RSA_free(p_rsa);
@@ -162,7 +162,7 @@ char *rsa_encrypt(const unsigned char *str, const char *public_key_filename,
 }
 
 char *rsa_decrypt(const unsigned char *str, const char *private_key_filename,
-                  int &len) {
+                  int *len) {
   char *p_de = NULL;
   RSA *p_rsa = NULL;
   FILE *pf = NULL;
@@ -176,8 +176,8 @@ char *rsa_decrypt(const unsigned char *str, const char *private_key_filename,
     rsa_len = RSA_size(p_rsa);
     p_de = static_cast<char *>(malloc(rsa_len + 1));
     memset(p_de, 0, rsa_len + 1);
-    if ((len = RSA_private_decrypt(rsa_len, str, (unsigned char *)p_de, p_rsa,
-                                   RSA_NO_PADDING)) < 0)
+    if ((*len = RSA_private_decrypt(rsa_len, str, (unsigned char *)p_de, p_rsa,
+                                    RSA_NO_PADDING)) < 0)
       break;
   } while (0);
 

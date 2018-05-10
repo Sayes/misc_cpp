@@ -1,4 +1,8 @@
-// g++ trick.cc -std=c++11 -o release/trick
+/*
+ * Copyright (c) 2017-2018 S.Y.Z
+ *
+ * g++ trick.cc -std=c++11 -o release/trick
+ */
 
 #include <iostream>
 #include <string>

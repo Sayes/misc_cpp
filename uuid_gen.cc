@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2017-2018 S.Y.Z
+ */
+
+/*
 
 #include <objbase.h>
 #include <string>
@@ -51,8 +55,8 @@ intmain(intargc,char*argv[])
 
 // g++ uuid_gen.cc -std=c++11 -luuid -o release/uuid_gen
 //
-// Linux£ºuuid_generate(UUID)
-// cmd£ºgccatemp.c-oatemp-luuid
+// Linux: uuid_generate(UUID)
+// cmd: gccatemp.c-oatemp-luuid
 #include <stdio.h>
 #include <uuid/uuid.h>
 

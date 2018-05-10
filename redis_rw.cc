@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2017-2018 S.Y.Z
+ *
  * https://github.com/redis/hiredis.git
  *
  * g++ redis_rw.cc -std=c++11 -I$HIREDIS_HOME/include -L$HIREDIS_HOME/lib
