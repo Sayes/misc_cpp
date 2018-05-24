@@ -68,6 +68,7 @@ int main(int argc, char* argv[]) {
           params += pElementName->GetText();
           params += "\"";
 
+          // bndbox
           tinyxml2::XMLElement* pElementBBox =
               pElementObj->FirstChildElement("bndbox");
           if (pElementBBox) {
@@ -102,8 +103,29 @@ int main(int argc, char* argv[]) {
                 params += pElementYMax->GetText();
               }
             }
-            params += "}";  // END bndbox
-          }
+            params += "}";
+          }  // END bndbox
+
+          tinyxml2::XMLElement* pElementPolygon =
+              pElementObj->FirstChildElement("polygon");
+          if (pElementPolygon) {
+            params += ",\"polygon\":{";
+            {
+              tinyxml2::XMLElement* pElementPt =
+                  pElementPolygon->FirstChildElement();
+              while (pElementPt) {
+                params += "\"";
+                params += pElementPt->Name();
+                params += "\":";
+                params += pElementPt->GetText();
+                pElementPt = pElementPt->NextSiblingElement();
+                if (pElementPt) {
+                  params += ",";
+                }
+              }
+            }
+            params += "}";
+          }  // END polygon
         }
         params += "}";  // END object
 
