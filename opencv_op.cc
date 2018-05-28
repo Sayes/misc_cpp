@@ -5,9 +5,14 @@
  * -lopencv_highgui -lopencv_imgproc -o release/opencv_op
  */
 
+#include <stdio.h>
 #include <opencv2/opencv.hpp>
 
 int main(int argc, char* argv[]) {
+  if (argc < 3) {
+    printf("usage: opencv_op src dest\n");
+    return 0;
+  }
   std::string imgfn(argv[1]);
   std::string imgdestfn(argv[2]);
   cv::Mat img = cv::imread(imgfn);
