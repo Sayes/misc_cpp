@@ -12,29 +12,26 @@
 #include <boost/graph/visitors.hpp>
 #include <boost/utility.hpp>
 
+// [undirectedS | bidirectionalS]
 typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS>
-    Graph;
-typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
+    BidirectedGraph;
+typedef boost::graph_traits<BidirectedGraph>::vertex_descriptor Vertex;
 class myvisitor : public boost::bfs_visitor<> {
  public:
-  template <class Vertex, class Graph>
-  void discover_vertex(Vertex v, Graph&) {
+  template <class Vertex, class BidirectedGraph>
+  void discover_vertex(Vertex v, BidirectedGraph&) {
     std::cout << v << std::endl;
   }
 };
 
 int main(int argc, char* argv[]) {
-  std::vector<std::pair<uint32_t, uint32_t>> edges;
+  std::vector<std::pair<uint32_t, uint32_t> > edges;
   for (int i = 3; i < 10; ++i) {
-    std::pair<uint32_t, uint32_t> edge1(i - 1, i);
-    edges.push_back(edge1);
-    std::pair<uint32_t, uint32_t> edge2(i - 2, i);
-    edges.push_back(edge2);
-    std::pair<uint32_t, uint32_t> edge3(i - 3, i);
-    edges.push_back(edge3);
+    std::pair<uint32_t, uint32_t> edge(i - 1, i);
+    edges.push_back(edge);
   }
 
-  Graph g(&(edges[0]), &(edges[0]) + edges.size(), 9);
+  BidirectedGraph g(edges.begin(), edges.end(), 9);
 
   myvisitor vis;
   boost::breadth_first_search(g, boost::vertex(2, g), boost::visitor(vis));
