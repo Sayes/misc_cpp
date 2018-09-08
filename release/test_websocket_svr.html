@@ -12,60 +12,41 @@
 var webSocket = new WebSocket('ws://192.168.1.100:8090');
                        
 webSocket.onerror = function(event) {
-onError(event)
+  onError(event)
 };
                                         
 webSocket.onopen = function(event) {
-onOpen(event)
+  onOpen(event)
 };
                                                             
 webSocket.onclose = function(event) {
-onClose(event)
+  onClose(event)
 };
                                                                              
 webSocket.onmessage = function(event) {
-onMessage(event)
+  onMessage(event)
 };
                                                                                               
 function onMessage(event) {
-document.getElementById('messages').innerHTML
-+= '<br />' + event.data;
+  document.getElementById('messages').innerHTML += '<br/>' + event.data;
 }
 
 function onOpen(event) {
-document.getElementById('messages').innerHTML
-= 'Connection established';
+  document.getElementById('messages').innerHTML = 'Connection established';
 }
 
 function onClose(event) {
-document.getElementById('messages').innerHTML
-+= '<br />disconnection';
+  document.getElementById('messages').innerHTML += '<br/>disconnection';
 }
+
 function onError(event) {
-alert(event.data);
+  alert(event.data);
 }
 
 function start() {
-/*
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"100_814354124","taskType":"分类任务"},{"ID":"104_571799564","taskType":"分类任务"}]}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"100_814354124","taskType":"分类任务"}]}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"119_977593966","taskType":"检测任务"}]}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["acc","progress"],"time_limit":0}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["ce_loss","progress"],"time_limit":0}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"119_977593966","taskType":"检测任务"}],"query_type":["cls_loss","progress"],"time_limit":0}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"119_977593966","taskType":"检测任务"}],"query_type":["bbox_loss","progress"],"time_limit":0}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["lr","progress"],"time_limit":0}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["speed","progress"],"time_limit":0}');
-*/
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["acc"], "time_limit":-1}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["ce_loss"], "time_limit":-1}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"119_977593966","taskType":"检测任务"}],"query_type":["cls_loss"], "time_limit":-1}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"119_977593966","taskType":"检测任务"}],"query_type":["bbox_loss"], "time_limit":-1}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["lr"], "time_limit":-1}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["speed"], "time_limit":-1}');
-webSocket.send('{"req_type":"dev_para","task_id":[{"ID":"1378_468654305","taskType":"分类任务"}],"query_type":["progress"], "time_limit":-1}');
-//webSocket.send('{"req_type":"dev_stat","ip":"192.168.1.238","query_type":["cpu","mem","mem_free"],"num":0}');
-return false;
+  webSocket.send('Hello World');
+  webSocket.send('Message echo from websocket server');
+  return true;
 }
 </script>
 </body>

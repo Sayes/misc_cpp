@@ -1,7 +1,9 @@
 /*
  * Copyright (c) 2017-2018 S.Y.Z
- * gcc mongodb_conn.cc -std=c++11 -I/usr/local/include/libbson-1.0/ -lmongoc-1.0
- * -lbson-1.0 -g -o release/mongodb_conn
+ *
+ * gcc mongodb_conn.c -I/usr/local/include/libbson-1.0/ -lmongoc-1.0 -lbson-1.0
+ * -g -o release/mongodb_conn_c
+ *
  */
 
 #include <libbson-1.0/bson.h>

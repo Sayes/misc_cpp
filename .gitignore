@@ -1,10 +1,13 @@
+a.out
+makeall.sh
 release/base64
 release/core
 release/crypto_op
 release/fastdfs_op
 release/json_parse
 release/libpython_wrap.so
-release/mongodb_conn
+release/mongodb_conn_c
+release/mongodb_conn_cc
 release/mysql_conn
 release/opencv_op
 release/redis_rw
@@ -12,3 +15,4 @@ release/trick
 release/uuid_gen
 release/websocket_svr
 release/xml_parse
+release/zlib_op

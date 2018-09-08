@@ -3,6 +3,7 @@
  *
  * g++ opencv_op.cc -I$OPENCV2_HOME/include -L$OPENCV2_HOME/lib -lopencv_core
  * -lopencv_highgui -lopencv_imgproc -o release/opencv_op
+ *
  */
 
 #include <stdio.h>

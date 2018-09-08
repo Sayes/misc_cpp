@@ -4,13 +4,15 @@
  *
  * g++ mongodb_conn.cc -std=c++11 -I/usr/local/include/libmongoc-1.0
  * -I/usr/local/include/mongocxx/v_noabi -I/usr/local/include/bsoncxx/v_noabi
- * -I/usr/local/include/libbson-1.0 -lbsoncxx -lmongocxx -o release/mongodb_conn
+ * -I/usr/local/include/libbson-1.0 -lbsoncxx -lmongocxx -o
+ * release/mongodb_conn_cc
+ *
  */
 
 #include <stdio.h>
-#include <bsoncxx/builder/basic/array.hpp>
-#include <bsoncxx/builder/basic/document.hpp>
 #include <bsoncxx/builder/basic/kvp.hpp>
+#include <bsoncxx/builder/stream/array.hpp>
+#include <bsoncxx/builder/stream/document.hpp>
 #include <mongocxx/client.hpp>
 #include <mongocxx/cursor.hpp>
 #include <mongocxx/exception/query_exception.hpp>
@@ -23,7 +25,7 @@ int main(int argc, char* argv[]) {
   int result = -1;
   do {
     try {
-      mongocxx::uri uri_("mongodb://localhost:27017");
+      mongocxx::uri uri_("mongodb://192.168.1.32:27017");
       mongocxx::instance inst_;
       mongocxx::client client_;
       mongocxx::database db_;

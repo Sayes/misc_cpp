@@ -15,6 +15,9 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) {
+  if (argc < 3) {
+    printf("usage: redis_rw localhost key value\n");
+  }
   const char* host = argv[1];
   const char* key = argv[2];
   const char* value = argv[3];

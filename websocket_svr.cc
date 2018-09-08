@@ -6,29 +6,40 @@
  *
  * g++ websocket_svr.cc -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -DASIO_STANDALONE
  * -I$WEBSOCKETPP070_HOME/include -lssl -lcrypto -o release/websocket_svr
+ *
  */
 
+#include <iostream>
 #include <websocketpp/config/asio.hpp>
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 
-typedef websocketpp::server<websocketpp::config::asio> WebsocketServer;
-typedef websocketpp::server<websocketpp::config::asio_tls> WebsocketServer_tls;
-typedef WebsocketServer::message_ptr message_ptr;
+template <class T>
+void processMessage(
+    T* server, const websocketpp::connection_hdl& hdl,
+    const websocketpp::server<websocketpp::config::asio>::message_ptr& msg);
 
 template <class T>
-void processMessage(T* server, const websocketpp::connection_hdl& hdl,
-                    const message_ptr& msg);
+void OnOpen(T* server, websocketpp::connection_hdl hdl) {
+  std::cout << "OnOpen() called" << std::endl;
+}
 
 template <class T>
-void OnOpen(T* server, websocketpp::connection_hdl hdl) {}
+void OnClose(T* server, websocketpp::connection_hdl hdl) {
+  std::cout << "OnClose() called" << std::endl;
+}
 
 template <class T>
-void OnClose(T* server, websocketpp::connection_hdl hdl) {}
-
-template <class T>
-void OnMessage(T* server, websocketpp::connection_hdl hdl, message_ptr msg) {
+void OnMessage(
+    T* server, websocketpp::connection_hdl hdl,
+    websocketpp::server<websocketpp::config::asio>::message_ptr msg) {
   processMessage<T>(server, hdl, msg);
+}
+
+template <class T>
+void OnFail(T* server, websocketpp::connection_hdl hdl,
+            websocketpp::server<websocketpp::config::asio>::message_ptr msg) {
+  std::cout << "OnFail() called" << std::endl;
 }
 
 template <class T>
@@ -122,28 +133,35 @@ int main(int argc, char* argv[]) {
   int result = -1;
   do {
     asio::io_service ios;
-    WebsocketServer server;
+
+    // ws
+    websocketpp::server<websocketpp::config::asio> server;
     server.set_access_channels(websocketpp::log::alevel::all);
     server.clear_access_channels(websocketpp::log::alevel::frame_payload);
     server.init_asio(&ios);
-    server.set_open_handler(bind(&OnOpen<WebsocketServer>, &server,
-                                 websocketpp::lib::placeholders::_1));
-    server.set_close_handler(bind(&OnClose<WebsocketServer>, &server,
-                                  websocketpp::lib::placeholders::_1));
-    server.set_message_handler(bind(&OnMessage<WebsocketServer>, &server,
-                                    websocketpp::lib::placeholders::_1,
-                                    websocketpp::lib::placeholders::_2));
+    server.set_open_handler(
+        bind(&OnOpen<websocketpp::server<websocketpp::config::asio>>, &server,
+             websocketpp::lib::placeholders::_1));
+    server.set_close_handler(
+        bind(&OnClose<websocketpp::server<websocketpp::config::asio>>, &server,
+             websocketpp::lib::placeholders::_1));
+    server.set_message_handler(
+        bind(&OnMessage<websocketpp::server<websocketpp::config::asio>>,
+             &server, websocketpp::lib::placeholders::_1,
+             websocketpp::lib::placeholders::_2));
     server.listen(8090);
     server.start_accept();
 
-    WebsocketServer_tls server_tls;
+    // wss
+    websocketpp::server<websocketpp::config::asio_tls> server_tls;
     server_tls.init_asio(&ios);
-    server_tls.set_message_handler(bind(&OnMessage<WebsocketServer_tls>,
-                                        &server_tls,
-                                        websocketpp::lib::placeholders::_1,
-                                        websocketpp::lib::placeholders::_2));
-    server_tls.set_http_handler(bind(&on_http<WebsocketServer_tls>, &server_tls,
-                                     websocketpp::lib::placeholders::_1));
+    server_tls.set_message_handler(
+        bind(&OnMessage<websocketpp::server<websocketpp::config::asio_tls>>,
+             &server_tls, websocketpp::lib::placeholders::_1,
+             websocketpp::lib::placeholders::_2));
+    server_tls.set_http_handler(
+        bind(&on_http<websocketpp::server<websocketpp::config::asio_tls>>,
+             &server_tls, websocketpp::lib::placeholders::_1));
     server_tls.set_tls_init_handler(bind(&on_tls_init, MOZILLA_INTERMEDIATE,
                                          websocketpp::lib::placeholders::_1));
     server_tls.listen(8091);
@@ -157,8 +175,9 @@ int main(int argc, char* argv[]) {
 }
 
 template <class T>
-void processMessage(T* server, const websocketpp::connection_hdl& hdl,
-                    const message_ptr& msg) {
+void processMessage(
+    T* server, const websocketpp::connection_hdl& hdl,
+    const websocketpp::server<websocketpp::config::asio>::message_ptr& msg) {
   std::string str_query = msg->get_payload();
   try {
     server->send(hdl, str_query, websocketpp::frame::opcode::text);

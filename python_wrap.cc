@@ -1,7 +1,9 @@
 /*
  * Copyright (c) 2017-2018 S.Y.Z
+ *
  * g++ python_wrap.cc -std=c++11 -fPIC -shared -DSUPPORT_PYTHON3 -I$PYTHON3_INC
  * -o release/libpython_wrap.so
+ *
  * python3 test_pywrap.py
  */
 
