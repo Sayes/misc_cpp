@@ -28,6 +28,33 @@
 #define EUPU_CATCH_END }
 #endif
 
+int32_t exec_syscmd(const char* cmd, std::vector<std::string>& results) {
+  char buf[1024 * 10];
+  int rc = 0;
+  FILE* fp = nullptr;
+
+  fp = popen(cmd, "r");
+  if (fp == nullptr) {
+    perror("popen() failed");
+    return -1;
+  }
+
+  while (fgets(buf, sizeof(buf), fp) != nullptr) {
+    printf("%s", buf);
+  }
+
+  rc = pclose(fp);
+  if (rc == -1) {
+    perror("pclose() failed");
+    return -1;
+  } else {
+    if (WIFEXITED(rc) != 0) {
+      return WEXITSTATUS(rc);
+    }
+  }
+  return -1;
+}
+
 int main(int argc, char* argv[]) {
   // use do_while for gather or release resource when func failed
   char* p = new char[100];
@@ -81,6 +108,13 @@ int main(int argc, char* argv[]) {
 
   for (auto it : map1) {
     printf("%d %s\n", it.first, it.second.c_str());
+  }
+
+  // execute system cli
+  std::vector<std::string> results;
+  exec_syscmd("ls", results);
+  for (auto it : results) {
+    printf("%s", it.c_str());
   }
 
   return 0;
