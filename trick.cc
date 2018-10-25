@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2017-2018 S.Y.Z
  *
- * g++ trick.cc -std=c++11 -o release/trick
+ * g++ trick.cc -std=c++11 -o release/trick_cc
  */
 
 #include <stdio.h>

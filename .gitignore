@@ -11,7 +11,8 @@ release/mongodb_conn_cc
 release/mysql_conn
 release/opencv_op
 release/redis_rw
-release/trick
+release/trick_c
+release/trick_cc
 release/uuid_gen
 release/websocket_svr
 release/xml_parse
