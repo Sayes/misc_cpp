@@ -222,8 +222,34 @@ inline unsigned char b64_lookup(char c) {
   return -1;
 }
 
-/*
- *
- */
+  /*
+   *
+   */
 
-int main(int argc, char *argv[]) { return 0; }
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  FILE *fp = fopen(argv[1], "r");
+  fseek(fp, 0, SEEK_END);
+  size_t flen = ftell(fp);
+  fseek(fp, 0, SEEK_SET);
+  char *p = new char[flen];
+  if (p) {
+    fread(p, sizeof(char), flen, fp);
+    size_t b64len = base64_enc_len(flen);
+
+    char *pb64 = new char[b64len];
+    if (pb64) {
+      size_t b64len_process = base64_encode(pb64, p, flen);
+      if (b64len_process == b64len) {
+        printf("%s\n", pb64);
+      }
+      delete pb64;
+      pb64 = nullptr;
+    }
+    delete p;
+    p = nullptr;
+  }
+  fclose(fp);
+  return 0;
+}
