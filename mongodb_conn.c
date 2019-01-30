@@ -6,6 +6,7 @@
  *
  */
 
+#include <bson.h>
 #include <libbson-1.0/bson.h>
 #include <libmongoc-1.0/mongoc.h>
 #include <stdio.h>
@@ -20,13 +21,29 @@ int main(int argc, char* argv[]) {
   mongoc_cursor_t* pcursor = NULL;
   mongoc_init();
   do {
-    pmc = mongoc_client_new("mongodb://192.168.1.32:27017");
+    pmc = mongoc_client_new("mongodb://192.168.1.41:32017");
     pdb = mongoc_client_get_database(pmc, "local");
     if (mongoc_database_has_collection(pdb, "startup_log", &error)) {
       pcoll = mongoc_database_get_collection(pdb, "startup_log");
       if (pcoll) {
-        bson_t* pdata = BCON_NEW(NULL);
-        pcursor = mongoc_collection_find_with_opts(pcoll, pdata, NULL, NULL);
+        bson_t* pfilter = BCON_NEW(NULL);
+        bson_t* pminmaxfilter = BCON_NEW(NULL);
+        bson_t* popts = BCON_NEW(NULL);
+        bson_t* psort = BCON_NEW(NULL);
+
+        bson_init(pfilter);
+        bson_init(pminmaxfilter);
+        bson_init(popts);
+        bson_init(psort);
+
+        BSON_APPEND_UTF8(pfilter, "hostname", "mongodb-c4db6d45f-kgjdf");
+        BSON_APPEND_INT64(pfilter, "pid", 1);
+
+        BSON_APPEND_INT64(popts, "limit", 1);
+        BSON_APPEND_INT64(psort, "_id", 1);
+        BSON_APPEND_DOCUMENT(popts, "sort", psort);
+
+        pcursor = mongoc_collection_find_with_opts(pcoll, pfilter, popts, NULL);
         const bson_t* ps = mongoc_cursor_current(pcursor);
         while (mongoc_cursor_next(pcursor, &ps)) {
           size_t len;
@@ -34,7 +51,11 @@ int main(int argc, char* argv[]) {
           printf("%s\n", json);
           bson_free(json);
         }  // while
-        bson_destroy(pdata);
+
+        bson_destroy(psort);
+        bson_destroy(popts);
+        bson_destroy(pminmaxfilter);
+        bson_destroy(pfilter);
       }
     }
   } while (0);
