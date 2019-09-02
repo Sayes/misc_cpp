@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 S.Y.Z
+ * Copyright (c) 2017-2018 SYZ
  * g++ crypto_op.cc -std=c++11 -lcrypto -o release/crypto_op
  */
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 S.Y.Z
+ * Copyright (c) 2017-2018 SYZ
  *
  * gcc trick.c -o release/trick_c
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 S.Y.Z
+ * Copyright (c) 2017-2018 SYZ
  *
  * https://github.com/leethomason/tinyxml2.git
  * v6.0.0

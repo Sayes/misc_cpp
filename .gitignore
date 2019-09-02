@@ -17,3 +17,5 @@ release/uuid_gen
 release/websocket_svr
 release/xml_parse
 release/zlib_op
+release/file_op
+release/trick

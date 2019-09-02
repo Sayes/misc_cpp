@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 S.Y.Z
+ * Copyright (c) 2017-2018 SYZ
  * https://github.com/mongodb/mongo-cxx-driver
  *
  * g++ mongodb_conn.cc -std=c++11 -I/usr/local/include/libmongoc-1.0

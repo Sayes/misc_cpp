@@ -1,3 +1,3 @@
 /*
- * Copyright (c) 2017-2018 S.Y.Z
+ * Copyright (c) 2017-2018 SYZ
  */
