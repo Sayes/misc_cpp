@@ -11,6 +11,7 @@ release/mongodb_conn_cc
 release/mysql_conn
 release/opencv_op
 release/redis_rw
+release/sqlite3_op_c
 release/trick_c
 release/trick_cc
 release/uuid_gen
