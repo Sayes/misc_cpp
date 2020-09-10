@@ -6,7 +6,7 @@ int sqlite3_callback_func(void *pHandle, int iRet, char **szSrc, char **szDst) {
   //...
   if (1 == iRet) {
     int iTableExist =
-        atoi(*(szSrc)); //此处返回值为查询到同名表的个数，没有则为0，否则大于0
+        atoi(*(szSrc));  //此处返回值为查询到同名表的个数，没有则为0，否则大于0
     if (pHandle != nullptr) {
       int *pRes = (int *)pHandle;
       *pRes = iTableExist;
@@ -14,8 +14,8 @@ int sqlite3_callback_func(void *pHandle, int iRet, char **szSrc, char **szDst) {
     // szDst 指向的内容为"count(*)"
   }
 
-  return 0; //返回值一定要写，否则下次调用 sqlite3_exec(...) 时会返回
-            //SQLITE_ABORT
+  return 0;  //返回值一定要写，否则下次调用 sqlite3_exec(...) 时会返回
+             // SQLITE_ABORT
 }
 
 bool IsTableExist(sqlite3 *db, const std::string &strTableName) {
@@ -63,12 +63,13 @@ int main(int argc, char *argv[]) {
   }
 
   /* Create SQL statement */
-  sql = "CREATE TABLE COMPANY("
-        "ID INT PRIMARY KEY     NOT NULL,"
-        "NAME           TEXT    NOT NULL,"
-        "AGE            INT     NOT NULL,"
-        "ADDRESS        CHAR(50),"
-        "SALARY         REAL );";
+  sql =
+      "CREATE TABLE COMPANY("
+      "ID INT PRIMARY KEY     NOT NULL,"
+      "NAME           TEXT    NOT NULL,"
+      "AGE            INT     NOT NULL,"
+      "ADDRESS        CHAR(50),"
+      "SALARY         REAL );";
 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -80,14 +81,15 @@ int main(int argc, char *argv[]) {
   }
 
   /* Create SQL statement */
-  sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
-        "VALUES (1, 'Paul', 32, 'California', 20000.00 ); "
-        "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
-        "VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "
-        "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)"
-        "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );"
-        "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)"
-        "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
+  sql =
+      "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
+      "VALUES (1, 'Paul', 32, 'California', 20000.00 ); "
+      "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
+      "VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "
+      "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)"
+      "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );"
+      "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)"
+      "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);

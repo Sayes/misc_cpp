@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <sqlite3.h>
+#include <stdio.h>
 
 static int callback(void *data, int argc, char **argv, char **azColName) {
   int i;
@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   char *zErrMsg = 0;
   int rc;
   char *sql;
-  const char* data = "Callback function called";
+  const char *data = "Callback function called";
 
   rc = sqlite3_open("test_sqlite.db", &db);
 
@@ -28,12 +28,13 @@ int main(int argc, char *argv[]) {
   }
 
   /* Create SQL statement */
-  sql = "CREATE TABLE COMPANY("
-        "ID INT PRIMARY KEY     NOT NULL,"
-        "NAME           TEXT    NOT NULL,"
-        "AGE            INT     NOT NULL,"
-        "ADDRESS        CHAR(50),"
-        "SALARY         REAL );";
+  sql =
+      "CREATE TABLE COMPANY("
+      "ID INT PRIMARY KEY     NOT NULL,"
+      "NAME           TEXT    NOT NULL,"
+      "AGE            INT     NOT NULL,"
+      "ADDRESS        CHAR(50),"
+      "SALARY         REAL );";
 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -45,14 +46,15 @@ int main(int argc, char *argv[]) {
   }
 
   /* Create SQL statement */
-  sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
-        "VALUES (1, 'Paul', 32, 'California', 20000.00 ); "
-        "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
-        "VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "
-        "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)"
-        "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );"
-        "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)"
-        "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
+  sql =
+      "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
+      "VALUES (1, 'Paul', 32, 'California', 20000.00 ); "
+      "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
+      "VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "
+      "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)"
+      "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );"
+      "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)"
+      "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);

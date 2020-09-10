@@ -2,7 +2,7 @@
  * Copyright (c) 2017-2018 SYZ
  *
  * gcc file_op.c -o release/file_op
-*/
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -22,15 +22,10 @@ void read_txt() {
   }
 }
 
-void write_txt() {
-}
+void write_txt() {}
 
-void read_bin() {
-}
+void read_bin() {}
 
-void write_bin() {
-}
+void write_bin() {}
 
-int main(int argc, char* argv[]) {
-  read_txt();
-}
+int main(int argc, char* argv[]) { read_txt(); }

@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
-int main ()
-{
+int main() {
   int RANGE_MIN = 1000;
   int RANGE_MAX = 3000;
   for (int i = 0; i < 100; ++i) {
@@ -11,10 +10,13 @@ int main ()
     gettimeofday(&tpstart, NULL);
     srand(tpstart.tv_usec);
     int random = rand();
-    printf("%d\n", (int)((random*1.0f/RAND_MAX)*(RANGE_MAX-RANGE_MIN) + RANGE_MIN));
+    printf("%d\n", (int)((random * 1.0f / RAND_MAX) * (RANGE_MAX - RANGE_MIN) +
+                         RANGE_MIN));
     random = rand();
-    printf("%d\n", (int)((random*1.0f/RAND_MAX)*(RANGE_MAX-RANGE_MIN) + RANGE_MIN));
+    printf("%d\n", (int)((random * 1.0f / RAND_MAX) * (RANGE_MAX - RANGE_MIN) +
+                         RANGE_MIN));
     random = rand();
-    printf("%d\n", (int)((random*1.0f/RAND_MAX)*(RANGE_MAX-RANGE_MIN) + RANGE_MIN));
+    printf("%d\n", (int)((random * 1.0f / RAND_MAX) * (RANGE_MAX - RANGE_MIN) +
+                         RANGE_MIN));
   }
 }
