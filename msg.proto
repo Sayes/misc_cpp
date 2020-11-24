@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package Data;
+
+message Vector {
+  int32 vx = 1;
+  int32 vy = 2;
+  int32 vz = 3;
+}
+
+message Point {
+  int32 px = 1;
+  int32 py = 2;
+  int32 pz = 3;
+}
+
+enum MsgType {
+  Vec = 0;
+  Pnt = 1;
+}
+
+message FinalMsg {
+  string username = 1;
+  string password = 2;
+  MsgType msgType = 3;
+  Vector vector = 4;
+  Point point = 5;
+}

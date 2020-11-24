@@ -1,3 +1,4 @@
 {
-  "key1" : "good"
+  "key1" : "good",
+  "array" : ["dog", "cat"]
 }

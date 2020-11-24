@@ -35,6 +35,10 @@ int main(int argc, char* argv[]) {
     try {
       if (!pcr->parse(buf.get(), buf.get() + flen, &v, &errs)) break;
       std::cout << v["key1"].asString() << std::endl;
+      const Json::Value arrayObj = v["array"];
+      for (auto it : arrayObj) {
+        std::cout << it.asString() << std::endl;
+      }
     } catch (const std::exception& e) {
       std::cout << "Json::CharReader::parse(" << buf.get() << ") error"
                 << std::endl;

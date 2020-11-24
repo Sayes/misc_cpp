@@ -3,13 +3,14 @@
  * https://github.com/mongodb/mongo-cxx-driver
  *
  * g++ mongodb_conn.cc -std=c++11 -I/usr/local/include/libmongoc-1.0
- * -I/usr/local/include/mongocxx/v_noabi -I/usr/local/include/bsoncxx/v_noabi
+ * -I/usr/local/mongo-cxx-driver/include/mongocxx/v_noabi -I/usr/local/mongo-cxx-driver/include/bsoncxx/v_noabi
  * -I/usr/local/include/libbson-1.0 -lbsoncxx -lmongocxx -o
  * release/mongodb_conn_cc
  *
  */
 
 #include <stdio.h>
+#include <iostream>
 #include <bsoncxx/builder/basic/kvp.hpp>
 #include <bsoncxx/builder/stream/array.hpp>
 #include <bsoncxx/builder/stream/document.hpp>
@@ -25,7 +26,7 @@ int main(int argc, char* argv[]) {
   int result = -1;
   do {
     try {
-      mongocxx::uri uri_("mongodb://192.168.1.32:27017");
+      mongocxx::uri uri_("mongodb://192.168.1.100:27017");
       mongocxx::instance inst_;
       mongocxx::client client_;
       mongocxx::database db_;
@@ -54,6 +55,7 @@ int main(int argc, char* argv[]) {
 
       result = 0;
     } catch (mongocxx::query_exception e) {
+      std::cout << "failed" << std::endl;
     }
   } while (0);
   return result;
