@@ -1,8 +1,10 @@
+build_20210116_android
 a.out
 makeall.sh
 release/base64
 release/core
 release/crypto_op
+release/evhtp_op
 release/fastdfs_op
 release/json_parse
 release/libpython_wrap.so
