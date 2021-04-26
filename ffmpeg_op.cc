@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) 2017-2018 SYZ
+ *
+ * https://github.com/FFmpeg/FFmpeg.git
  *
  * g++ ffmpeg_op.cc -std=c++11 -I/usr/local/ffmpeg/include
  * -L/usr/local/ffmpeg/lib -lavdevice -lavutil -lavformat -lavcodec -lswresample
