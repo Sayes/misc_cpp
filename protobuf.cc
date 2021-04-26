@@ -4,7 +4,8 @@
  * https://github.com/protocolbuffers/protobuf.git
  * protoc msg.proto --cpp_out=./
  *
- * g++ -std=c++14 protobuf.cc msg.pb.cc -I. -I/usr/local/protobuf/include -L/usr/local/protobuf/lib -lprotobuf
+ * g++ -std=c++14 protobuf.cc msg.pb.cc -I. -I/usr/local/protobuf/include
+ * -L/usr/local/protobuf/lib -lprotobuf
  *
  */
 

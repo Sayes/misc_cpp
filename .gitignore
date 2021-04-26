@@ -6,6 +6,7 @@ release/core
 release/crypto_op
 release/evhtp_op
 release/fastdfs_op
+release/ffmpeg_op
 release/json_parse
 release/libpython_wrap.so
 release/mongodb_conn_c

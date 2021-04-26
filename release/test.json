@@ -1,4 +1,7 @@
 {
   "key1" : "good",
-  "array" : ["dog", "cat"]
+  "array" : ["dog", "cat"],
+  "object" : {
+    "name" : "wang"
+  }
 }

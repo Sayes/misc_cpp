@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
       for (auto it : arrayObj) {
         std::cout << it.asString() << std::endl;
       }
+      std::cout << v["object"]["name"].asString() << std::endl;
     } catch (const std::exception& e) {
       std::cout << "Json::CharReader::parse(" << buf.get() << ") error"
                 << std::endl;
