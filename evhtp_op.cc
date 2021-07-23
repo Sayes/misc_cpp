@@ -4,13 +4,13 @@
  *
  * https://github.com/criticalstack/libevhtp
  *
-   gcc evhtp_op.c \
+   g++ evhtp_op.cc -std=c++11 \
       -I/home/syz/workshop/opensource/libevhtp/include \
       -I/home/syz/workshop/opensource/libevhtp/build/include \
       -L/home/syz/workshop/opensource/libevhtp/build -levhtp \
       -L/usr/local/libevent/lib \
       -levent -pthread -lcrypto -levent_openssl \
-      -levent_core -levent_extra -levent_core -lssl -o release/evhtp_op_c
+      -levent_core -levent_extra -levent_core -lssl -o release/evhtp_op_cc
  *
  *******************************************/
 
@@ -20,9 +20,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <regex>
+#include <string>
+
+class WebUrl {
+ public:
+  WebUrl(const std::string& url) : url_(url){};
+  WebUrl(std::string&& url) : url_(std::move(url)){};
+
+  std::string request(const std::string& req) const {
+    std::smatch result;
+    if (std::regex_search(url_.cbegin(), url_.cend(), result,
+                          std::regex(req + "=(.*?)&"))) {
+      return result[1];
+    } else if (regex_search(url_.cbegin(), url_.cend(), result,
+                            std::regex(req + "=(.*)"))) {
+      return result[1];
+    } else {
+      return std::string();
+    }
+  };
+
+ private:
+  std::string url_;
+};
 
 void testcb(evhtp_request_t* req, void* a) {
-  const char* str = a;
+  const char* str = (const char*)a;
 
   evbuffer_add_printf(req->buffer_out, "%s %lu", str, strlen(str));
   evhtp_send_reply(req, EVHTP_RES_OK);
@@ -48,13 +72,19 @@ void issue161cb(evhtp_request_t* req, void* a) {
   evhtp_safe_free(b, evbuffer_free);
 }
 
-int main(int argc, char** argv) {
+void
+
+    int
+    main(int argc, char** argv) {
   evbase_t* evbase = event_base_new();
   evhtp_t* htp = evhtp_new(evbase, NULL);
 
-  evhtp_set_cb(htp, "/simple/", testcb, "simple");
-  evhtp_set_cb(htp, "/1/ping", testcb, "one");
-  evhtp_set_cb(htp, "/1/ping.json", testcb, "two");
+  WebUrl web("/simple?name=shenyizhong");
+  printf("%s\n", web.request("name").c_str());
+
+  evhtp_set_cb(htp, "/simple/", testcb, (void*)"simple");
+  evhtp_set_cb(htp, "/1/ping", testcb, (void*)"one");
+  evhtp_set_cb(htp, "/1/ping.json", testcb, (void*)"two");
   evhtp_set_cb(htp, "/issue161", issue161cb, NULL);
 #ifndef EVHTP_DISABLE_EVTHR
   evhtp_use_threads_wexit(htp, NULL, NULL, 8, NULL);

@@ -1,5 +1,9 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
-PROJECT(evhtp)
+PROJECT(evhttp_op)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-undefined-inline")
+
+SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 OPTION (SEETACAMS_DEBUG "" ON)
 
@@ -7,12 +11,14 @@ ADD_DEFINITIONS(-D__STDC_CONSTANT_MACROS)
 
 if (PLATFORM STREQUAL "rknn")
 
+ADD_DEFINITIONS(-DRKNN)
+
 # ----------------------------------------------------------------------------
 #  ffmpeg library
 # ----------------------------------------------------------------------------
 INCLUDE_DIRECTORIES(/home/syz/mnt/b/workshop/opensource/FFmpeg-n4.0)
 INCLUDE_DIRECTORIES(/home/syz/mnt/b/workshop/opensource/FFmpeg-n4.0/build_20201225_android)
-LINK_DIRECTORIES(/home/syz/mnt/b/workshop/opensource/FFmpeg-n4.0/build_20201225_android/android/armv7-a/lib)
+LINK_DIRECTORIES(/home/syz/mnt/b/workshop/opensource/FFmpeg-n4.0/build_20210310_armv7a/android/armv7-a/lib)
 LINK_LIBRARIES(avutil avformat avcodec swresample swscale)
 
 # ----------------------------------------------------------------------------
@@ -59,10 +65,14 @@ LINK_LIBRARIES(jsoncpp)
 # ----------------------------------------------------------------------------
 #  openssl library
 # ----------------------------------------------------------------------------
-INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/openssl/include)
-INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/openssl/build_20210115_android/include)
-#LINK_DIRECTORIES(/home/syz/workshop/opensource/openssl/build_20210115_android)
-#LINK_LIBRARIES(crypto ssl)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/openssl/build_20210419_armv7a/android/include)
+LINK_DIRECTORIES(/home/syz/workshop/opensource/openssl/build_20210419_armv7a/android/lib)
+LINK_LIBRARIES(crypto)
+
+#INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/openssl/include)
+#INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/openssl/build_20210115_android/include)
+##LINK_DIRECTORIES(/home/syz/workshop/opensource/openssl/build_20210115_android)
+##LINK_LIBRARIES(crypto ssl)
 
 # ----------------------------------------------------------------------------
 # oniguruma library
@@ -79,6 +89,36 @@ INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/libevhtp/include)
 INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/libevhtp/build_20210115_android/include)
 LINK_DIRECTORIES(/home/syz/workshop/opensource/libevhtp/build_20210115_android)
 LINK_LIBRARIES(evhtp)
+
+# ----------------------------------------------------------------------------
+#  boost library
+# ----------------------------------------------------------------------------
+INCLUDE_DIRECTORIES(/usr/local/boost-1.64.0/include)
+
+# ----------------------------------------------------------------------------
+#  cpp-httplib library
+# ----------------------------------------------------------------------------
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/cpp-httplib/out)
+LINK_DIRECTORIES(/home/syz/workshop/opensource/cpp-httplib/out/build_20210417_armv7a)
+LINK_LIBRARIES(httplib)
+
+# ----------------------------------------------------------------------------
+#  mpp library
+# ----------------------------------------------------------------------------
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/mpp/inc)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/mpp/osal/inc)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/mpp/utils)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/mpp/mpp/base/inc)
+LINK_DIRECTORIES(/home/syz/workshop/opensource/mpp/build/android/arm/mpp)
+LINK_LIBRARIES(mpp)
+
+# ----------------------------------------------------------------------------
+#  omega, orz library
+# ----------------------------------------------------------------------------
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/omega/include)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/OpenRoleZoo_inner/include)
+LINK_DIRECTORIES(/home/syz/workshop/opensource/OpenRoleZoo_inner/lib/rknn)
+LINK_LIBRARIES(ORZ_static)
 
 INCLUDE_DIRECTORIES(.)
 INCLUDE_DIRECTORIES(./src)
@@ -148,6 +188,16 @@ LINK_DIRECTORIES(/home/syz/workshop/opensource/oniguruma/build_20210117_x86_64)
 LINK_LIBRARIES(onig)
 
 # ----------------------------------------------------------------------------
+#  mpp library
+# ----------------------------------------------------------------------------
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/mpp/inc)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/mpp/osal/inc)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/mpp/utils)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/mpp/mpp/base/inc)
+LINK_DIRECTORIES(/home/syz/workshop/opensource/mpp/build/linux/x86_64/mpp)
+LINK_LIBRARIES(rockchip_mpp)
+
+# ----------------------------------------------------------------------------
 # libevhtp library
 # ----------------------------------------------------------------------------
 INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/libevhtp/include)
@@ -155,15 +205,18 @@ INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/libevhtp/build/include)
 LINK_DIRECTORIES(/home/syz/workshop/opensource/libevhtp/build)
 LINK_LIBRARIES(evhtp)
 
+# ----------------------------------------------------------------------------
+#  omega library
+# ----------------------------------------------------------------------------
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/omega/include)
+
 INCLUDE_DIRECTORIES(.)
 INCLUDE_DIRECTORIES(./src)
 LINK_LIBRARIES(pthread)
 
-
 endif()
 
 
-
-ADD_EXECUTABLE(evhtp_op
-        evhtp_op.c
+ADD_EXECUTABLE(a.out
+        evhttp_op.cc
         )

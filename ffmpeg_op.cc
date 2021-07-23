@@ -4,8 +4,8 @@
  * https://github.com/FFmpeg/FFmpeg.git
  *
  * g++ ffmpeg_op.cc -std=c++11 -I/usr/local/ffmpeg/include
- * -L/usr/local/ffmpeg/lib -lavdevice -lavutil -lavformat -lavcodec -lswresample
- * -lswscale -o release/ffmpeg_op
+ * -L/usr/local/ffmpeg/lib -lavdevice -lavutil -lavformat -lavcodec -lswscale -o
+ * release/ffmpeg_op
  *
  * check output yuv image
  * ffplay -f rawvideo -video_size 640x480 output.yuv

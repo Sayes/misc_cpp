@@ -20,5 +20,16 @@ int main(int argc, char* argv[]) {
   cv::Mat mat = img.clone();
   cv::resize(mat, mat, cv::Size(100, 100));
   cv::imwrite(imgdestfn, mat);
+
+  cv::Mat img2;
+  std::vector<unsigned char> vecImg;
+  std::vector<int> vecCompression_params;
+  vecCompression_params.push_back(CV_IMWRITE_JPEG_QUALITY);
+  vecCompression_params.push_back(90);
+  bool result = cv::imencode(".jpg", img2, vecImg, vecCompression_params);
+  if (!result) {
+    printf("imencode() failed\n");
+  }
+
   return 0;
 }

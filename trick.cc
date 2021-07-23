@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <boost/container/flat_map.hpp>
+#include <chrono>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -55,7 +56,24 @@ int32_t exec_syscmd(const char* cmd, std::vector<std::string>& results) {
   return -1;
 }
 
+int64_t statis_time_spend() {
+  auto t1 = std::chrono::system_clock::now();
+  uint64_t timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+                           t1.time_since_epoch())
+                           .count();
+  // do something here for spend time
+  sleep(1);
+  // end
+  auto t2 = std::chrono::system_clock::now();
+  std::chrono::duration<double, std::milli> fp_ms2 = t2 - t1;
+  std::cout << timestamp << std::endl;
+  std::cout << fp_ms2.count() << std::endl;
+}
+
 int main(int argc, char* argv[]) {
+  // statistics of spended time
+  statis_time_spend();
+
   // use do_while for gather or release resource when func failed
   char* p = new char[100];
   do {
