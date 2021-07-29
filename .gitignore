@@ -9,9 +9,10 @@ release/core
 release/crypto_op
 release/evhtp_op_c
 release/evhtp_op_cc
-release/evhtp_op
+release/evhttp_op_cc
 release/fastdfs_op
 release/ffmpeg_op
+release/httplib_op_cc
 release/json_parse
 release/libpython_wrap.so
 release/mongodb_conn_c

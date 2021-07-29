@@ -72,10 +72,7 @@ void issue161cb(evhtp_request_t* req, void* a) {
   evhtp_safe_free(b, evbuffer_free);
 }
 
-void
-
-    int
-    main(int argc, char** argv) {
+int main(int argc, char** argv) {
   evbase_t* evbase = event_base_new();
   evhtp_t* htp = evhtp_new(evbase, NULL);
 

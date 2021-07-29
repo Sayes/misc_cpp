@@ -57,8 +57,38 @@ intmain(intargc,char*argv[])
 //
 // Linux: uuid_generate(UUID)
 // cmd: gccatemp.c-oatemp-luuid
+#include <fcntl.h>
 #include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <uuid/uuid.h>
+#include <string>
+
+std::string uuid_gen(const std::string prefix) {
+  std::string str = "";
+  int fd = open("/proc/sys/kernel/random/uuid", O_RDONLY);
+
+  if (fd < 0) {
+    return str;
+  }
+
+  char buf[100];
+  memset(buf, 0, sizeof(buf));
+  int nret = read(fd, buf, sizeof(buf) - 1);
+
+  if (nret > 0) {
+    int len = strlen(buf);
+    if (buf[len - 1] == '\n') {
+      buf[len - 1] = 0;
+    }
+    str = prefix + std::string(buf);
+  }
+
+  close(fd);
+  return str;
+}
 
 int main(int argc, char* argv[]) {
   uuid_t uu;
@@ -69,6 +99,8 @@ int main(int argc, char* argv[]) {
     printf("%02X-", uu[i]);
   }
   printf("\n");
+
+  printf("%s\n", uuid_gen("").c_str());
 
   return 0;
 }
