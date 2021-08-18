@@ -3,6 +3,10 @@ build_20210116_android
 msg.pb.cc
 msg.pb.h
 a.out
+README.md
+constdef.h
+h264decoder_rk.cc
+h264decoder_rk.h
 makeall.sh
 release/base64
 release/core
@@ -30,4 +34,3 @@ release/xml_parse
 release/zlib_op
 release/file_op
 release/trick
-

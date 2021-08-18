@@ -17,9 +17,9 @@ ADD_DEFINITIONS(-DRKNN)
 #  ffmpeg library
 # ----------------------------------------------------------------------------
 INCLUDE_DIRECTORIES(/home/syz/mnt/b/workshop/opensource/FFmpeg-n4.0)
-INCLUDE_DIRECTORIES(/home/syz/mnt/b/workshop/opensource/FFmpeg-n4.0/build_20201225_android)
+INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/FFmpeg-n4.0/build_20210310_armv7a)
 LINK_DIRECTORIES(/home/syz/mnt/b/workshop/opensource/FFmpeg-n4.0/build_20210310_armv7a/android/armv7-a/lib)
-LINK_LIBRARIES(avutil avformat avcodec swresample swscale)
+LINK_LIBRARIES(avdevice avutil avformat avcodec swresample swscale)
 
 # ----------------------------------------------------------------------------
 #  x264 library
@@ -218,5 +218,6 @@ endif()
 
 
 ADD_EXECUTABLE(a.out
-        evhttp_op.cc
+        ffmpeg_op.cc
+        h264decoder_rk.cc
         )
