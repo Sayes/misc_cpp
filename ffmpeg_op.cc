@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
   uint8_t* out_buffer = nullptr;
 
   do {
-    bool USE_MPP = true;
+    bool USE_MPP = false;
     if (avformat_network_init() < 0) {
       break;
     }
@@ -92,9 +92,6 @@ int main(int argc, char** argv) {
     AVCodecContext* decodec_ctx = nullptr;
 
     seetacams::H264DecoderRk h264decoder_rk;
-#if defined(SUPPORT_OPENCV)
-    cv::Mat mat;
-#endif
     if (USE_MPP) {
       // rknn decoder
       if (h264decoder_rk.init(input_video_stream->codec,
@@ -124,6 +121,9 @@ int main(int argc, char** argv) {
       break;
     }
 
+#if defined(SUPPORT_OPENCV)
+    cv::Mat mat;
+#endif
     int got_frm = 0;
 
     // begin loop
@@ -137,9 +137,13 @@ int main(int argc, char** argv) {
       if (read_status >= 0) {
         if (USE_MPP) {
           // rk decoder
+          int w = 0;
           if (h264decoder_rk.decode(packet)) {
+#if defined(SUPPORT_OPENCV)
             mat = h264decoder_rk.getMat();
-            if (mat.cols > 0) {
+            w = mat.cols;
+#endif
+            if (w > 0) {
               got_frm = 1;
               break;
             }
@@ -164,8 +168,8 @@ int main(int argc, char** argv) {
     }
 
     if (USE_MPP) {
-      printf("width %d height %d\n", mat.cols, mat.rows);
 #if defined(SUPPORT_OPENCV)
+      printf("width %d height %d\n", mat.cols, mat.rows);
       cv::imwrite("./output.jpg", mat);
 #endif
     } else {
@@ -201,10 +205,10 @@ int main(int argc, char** argv) {
       fclose(fp);
 
 #if defined(SUPPORT_OPENCV)
-      cv::Mat mat;
       cv::Mat yuvImg;
       yuvImg.create(decodec_ctx->height * 3 / 2, decodec_ctx->width, CV_8UC1);
-      memcpy(yuvImg.data, out_buffer, out_buffer_size);
+      memcpy(yuvImg.data, out_buffer,
+             decodec_ctx->width * decodec_ctx->height * 3 / 2);
       if (yuvImg.empty()) {
         break;
       }

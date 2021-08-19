@@ -136,7 +136,7 @@ if (PLATFORM STREQUAL "x86_64")
 # ----------------------------------------------------------------------------
 INCLUDE_DIRECTORIES(/usr/local/ffmpeg/include)
 LINK_DIRECTORIES(/usr/local/ffmpeg/lib)
-LINK_LIBRARIES(avutil avformat avcodec swresample swscale)
+LINK_LIBRARIES(avdevice avutil avformat avcodec swresample swscale)
 
 # ----------------------------------------------------------------------------
 #  x264 library
