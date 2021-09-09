@@ -53,7 +53,7 @@ LINK_LIBRARIES(opencv_core opencv_highgui opencv_imgcodecs opencv_imgproc opencv
 INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/libevent/include)
 INCLUDE_DIRECTORIES(/home/syz/workshop/opensource/libevent/build_20201229_android/include)
 LINK_DIRECTORIES(/home/syz/workshop/opensource/libevent/build_20201229_android/lib)
-LINK_LIBRARIES(event event_core event_extra)
+LINK_LIBRARIES(event)
 
 # ----------------------------------------------------------------------------
 #  jsoncpp library
@@ -218,6 +218,6 @@ endif()
 
 
 ADD_EXECUTABLE(a.out
-        ffmpeg_op.cc
-        h264decoder_rk.cc
+        ffmpeg_read_stream.cc
+        #h264decoder_rk.cc
         )

@@ -49,6 +49,7 @@ int main(int argc, char** argv) {
     return 0;
   }
   AVFormatContext* input_ctx = nullptr;
+  AVDictionary* options = nullptr;
   AVPacket* packet = nullptr;
   AVFrame* orig_frm = nullptr;
   AVFrame* out_frm = nullptr;
@@ -66,12 +67,12 @@ int main(int argc, char** argv) {
     }
 
     avdevice_register_all();
-    AVDictionary* options = NULL;
     av_dict_set(&options, "buffer_size", "2048000", 0);
     av_dict_set(&options, "rtsp_transport", "tcp", 0);
     av_dict_set(&options, "stimeout", "5000000", 0);
     av_dict_set(&options, "max_delay", "500000", 0);
     if (avformat_open_input(&input_ctx, argv[1], nullptr, &options) < 0) {
+      avformat_free_context(input_ctx);
       break;
     }
     if (avformat_find_stream_info(input_ctx, nullptr) < 0) {
@@ -157,6 +158,7 @@ int main(int argc, char** argv) {
           }
         }
         av_packet_unref(packet);
+        av_init_packet(packet);
       }
       if (loop_cnt++ > 20) {
         printf("loop 20 times\n");
@@ -219,25 +221,25 @@ int main(int argc, char** argv) {
 
   } while (false);
 
-  if (!out_buffer) {
+  if (options) {
+    av_dict_free(options);
+  }
+  if (out_buffer) {
     av_free(out_buffer);
-    out_buffer = nullptr;
   }
-  if (!out_frm) {
+  if (out_frm) {
     av_frame_free(&out_frm);
-    out_frm = nullptr;
   }
-  if (!packet) {
+  if (packet) {
+    av_packet_unref(packet);
     av_packet_free_side_data(packet);
     av_packet_free(&packet);
-    packet = nullptr;
   }
-  if (!orig_frm) {
+  if (orig_frm) {
     av_frame_free(&orig_frm);
   }
-  if (!input_ctx) {
+  if (input_ctx) {
     avformat_close_input(&input_ctx);
-    avformat_free_context(input_ctx);
   }
   avformat_network_deinit();
   return 0;
