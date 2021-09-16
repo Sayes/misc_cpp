@@ -158,7 +158,6 @@ int main(int argc, char** argv) {
           }
         }
         av_packet_unref(packet);
-        av_init_packet(packet);
       }
       if (loop_cnt++ > 20) {
         printf("loop 20 times\n");
@@ -222,7 +221,7 @@ int main(int argc, char** argv) {
   } while (false);
 
   if (options) {
-    av_dict_free(options);
+    av_dict_free(&options);
   }
   if (out_buffer) {
     av_free(out_buffer);
@@ -230,11 +229,7 @@ int main(int argc, char** argv) {
   if (out_frm) {
     av_frame_free(&out_frm);
   }
-  if (packet) {
-    av_packet_unref(packet);
-    av_packet_free_side_data(packet);
-    av_packet_free(&packet);
-  }
+  av_packet_free(&packet);
   if (orig_frm) {
     av_frame_free(&orig_frm);
   }

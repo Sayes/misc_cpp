@@ -16,6 +16,7 @@ release/evhtp_op_cc
 release/evhttp_op_cc
 release/fastdfs_op
 release/ffmpeg_op
+release/ffmpeg_read_stream
 release/httplib_op_cc
 release/json_parse
 release/libpython_wrap.so

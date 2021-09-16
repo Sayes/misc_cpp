@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <chrono>
+#include <ctime>
+#include <iomanip>
+#include <iostream>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -51,10 +55,22 @@ AGAIN:
     av_dict_set(&options, "stimeout", "5000000", 0);
     av_dict_set(&options, "max_delay", "500000", 0);
 
-    if (avformat_open_input(&input_ctx, argv[1], nullptr, &options) < 0) {
+    int open_status =
+        avformat_open_input(&input_ctx, argv[1], nullptr, &options);
+    if (open_status < 0) {
       avformat_free_context(input_ctx);
       input_ctx = nullptr;
-      printf("avformat_open_input() failed\n");
+
+      char errbuf[1024] = {};
+      av_strerror(open_status, errbuf, 1024);
+
+      time_t now = time(nullptr);
+      std::tm* curr_tm = localtime(&now);
+      char time[80] = {0};
+      strftime(time, 80, "%Y-%m-%d %H:%M:%S", curr_tm);
+
+      printf("avformat_open_input() failed, error: %s, time: %s\n", errbuf,
+             time);
       sleep(1);
       break;
     }
@@ -85,13 +101,20 @@ AGAIN:
       } while (read_status == AVERROR(EAGAIN));
 
       if (read_status >= 0) {
+        // decode here
       } else {
         char errbuf[1024] = {};
         av_strerror(read_status, errbuf, 1024);
+
+        time_t now = time(nullptr);
+        std::tm* curr_tm = localtime(&now);
+        char time[80] = {0};
+        strftime(time, 80, "%Y-%m-%d %H:%M:%S", curr_tm);
+
         printf(
             "===================== av_read_frame() failed, error code :%d, "
-            "error string %s, frame count %d\n",
-            read_status, errbuf, loop_cnt);
+            "error string %s, %s, frame count %d\n",
+            read_status, errbuf, time, loop_cnt);
         break;
       }
 
@@ -101,20 +124,15 @@ AGAIN:
       }
 
       av_packet_unref(packet);
-      av_init_packet(packet);
     }
 
   } while (false);
-
   av_packet_unref(packet);
 
-  if (packet) {
-    av_packet_free(&packet);
-    packet = nullptr;
-  }
   if (options) {
     av_dict_free(&options);
   }
+  av_packet_free(&packet);
   if (input_ctx) {
     avformat_close_input(&input_ctx);
   }
